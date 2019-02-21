@@ -15,10 +15,16 @@ class ShopModel extends BaseModel
     protected $name = 'shop';
     protected $pk = 'shop_id';
 
+    public function withAddress()
+    {
+        $address = $this->address()->find();
+        $this['address'] =$address;
+    }
+
 //    发布多个工作
     public function jobs()
     {
-    return $this->hasMany('JobModel');
+        return $this->hasMany('JobModel');
     }
 
 //    一个商家有一个地址

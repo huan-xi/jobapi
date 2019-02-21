@@ -13,17 +13,23 @@ use app\api\model\JobModel;
 class Job extends BaseController
 {
 
+
     public function getJobInfo($id)
     {
-        $job = JobModel::get($id);
-        if ($job) $job['images'] = $job->images()->select();
+        $job=JobModel::with("shop,images")->find($id);
+        $job->shop=$job->shop->withAddress();
         return json(generateSuccessMsg($job));
     }
 
     public function getJobs()
     {
         $data = input('get.');
-        $jobs = JobModel::with('shop')->where(['status' => 1])->page($data['page'], $data['size'])->select();
+        $jobs = (new JobModel())->where(['status' => 1])->page($data['page'], $data['size'])->select();
+        for($i=0;$i<count($jobs);$i++){
+            $shop=$jobs[$i]->shop()->find();
+            $shop->withAddress();
+            $jobs[$i]['shop']=$shop;
+        }
         $msg['total']= (new JobModel())->where(['status' => 1])->count();
         $msg['rows']=$jobs;
         return json(generateSuccessMsg($msg));

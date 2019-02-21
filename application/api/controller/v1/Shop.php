@@ -26,6 +26,12 @@ class Shop extends BaseController
         }
         return $this->response(generateSuccessMsg($shop));
     }
+    public function getJobInfo($id)
+    {
+        $job = JobModel::get($id);
+        if ($job) $job['images'] = $job->images()->select();
+        return json(generateSuccessMsg($job));
+    }
 
     public function updateInfo()
     {
