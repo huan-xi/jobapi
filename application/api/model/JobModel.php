@@ -15,6 +15,12 @@ class JobModel extends BaseModel
     protected $pk = 'job_id';
     protected $hidden = ['shop_id'];
 
+//    属于一个商家
+    public function shop()
+    {
+        return $this->belongsTo('ShopModel','shop_id','shop_id');
+    }
+
 //    有多张图片
     public function images()
     {
