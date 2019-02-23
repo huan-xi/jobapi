@@ -8,12 +8,18 @@
 
 namespace app\api\controller\v1;
 
+use app\api\model\JobModel;
 use app\api\model\ShopModel;
 use  app\api\service\Token;
 use app\api\validate\ShopInfoValidate;
+use app\lib\exception\NoThisJobException;
 
 class Shop extends BaseController
 {
+    private function checkJob($job){
+        $shop_id=Token::getId();
+        if ($job['shop_id']!=$shop_id) throw new NoThisJobException();
+    }
     public function getInfo()
     {
         $shop = ShopModel::get(Token::getId());
@@ -64,6 +70,7 @@ class Shop extends BaseController
     public function deleteJob($id)
     {
         $job = JobModel::get($id);
+        $this->checkJob($job);
         $job->save(['status'=>2]);
         return json(generateSuccessMsg("删除成功"));
     }
@@ -100,12 +107,13 @@ class Shop extends BaseController
         $id = Token::getId();
         $data = input("post.");
         $shop = ShopModel::get($id);
+        //TODO 判断是否填写信息
         $job = $shop->jobs()->save([
             'status' => 1,
             'create_time' => time(),
             'job_desc' => $data['desc'],
             'pv'=>0
-        ])->find();
+        ]);
         $images = explode(",", $data['oosImages']);
         //保存图片
         for ($i = 0; $i < count($images); $i++) {

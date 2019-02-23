@@ -10,6 +10,7 @@ namespace app\api\service;
 
 
 use app\api\model\ShopModel;
+use app\api\model\UserModel;
 use think\Exception;
 
 class UserToken
@@ -18,7 +19,7 @@ class UserToken
     protected $wxAppId;
     protected $wxAppSecret;
     protected $wxLoginUrl;
-
+    protected $mode;
     /**
      * UserToken constructor.
      * @param $code
@@ -26,6 +27,7 @@ class UserToken
      */
     function __construct($code, $mode = '')
     {
+        $this->mode=$mode;
         if ($mode == 'u') {
             $this->wxAppId = config('wx.user_app_id');
             $this->wxAppSecret = config('wx.user_app_secret');
@@ -68,10 +70,20 @@ class UserToken
     private function grantToken($wxRes)
     {
         $openid = $wxRes['openid'];
-        $shop = ShopModel::get($openid);
-        if (!$shop) ShopModel::create(['shop_id' => $openid,
-            'status'=>'1',
-            'create_time'=>time()]);
+
+        if($this->mode=="u"){
+            //用户模式
+            $shop = UserModel::get($openid);
+            if (!$shop) ShopModel::create(['user_id' => $openid,
+                'status'=>'1',
+                'create_time'=>time()]);
+        }else{
+            //商家模式
+            $shop = ShopModel::get($openid);
+            if (!$shop) ShopModel::create(['shop_id' => $openid,
+                'status'=>'1',
+                'create_time'=>time()]);
+        }
         $key = $this->saveToCache($this->prepareCachedValue($openid));
         return $key;
     }

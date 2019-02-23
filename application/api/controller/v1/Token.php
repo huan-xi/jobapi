@@ -18,6 +18,11 @@ class Token extends BaseController
         $token = (new UserToken($code))->get();
         return $this->response(generateMsg(1, $token));
     }
+    public function getUserToken($code = '')
+    {
+        $token = (new UserToken($code,'u'))->get();
+        return $this->response(generateMsg(1, $token));
+    }
 
     public function getUploadToken()
     {

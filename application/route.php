@@ -21,6 +21,7 @@ Route::post('/shop/job', $version . '.Shop/addJob');
 Route::post('/shop/job/update', $version . '.Shop/update');
 Route::get('/shop/jobs/:status', $version . '.Shop/getJobs');
 Route::get('/shop/job/delete/:id', $version . '.Shop/deleteJob',[],['id'=>'\d+']);
+Route::get('/shop/job/:id', $version . '.Shop/getJobInfo',[],['id'=>'\d+']);
 Route::post('/shop/job/image', $version . '.Shop/addImage');
 Route::get('/shop/job/image/delete/:id', $version . '.Shop/deleteImage');
 Route::get('/jobs', $version . '.Job/getJobs');

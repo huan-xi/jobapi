@@ -9,7 +9,7 @@
 namespace app\api\model;
 
 
-class User extends BaseModel
+class UserModel extends BaseModel
 {
     protected $pk='user_id';
 }
