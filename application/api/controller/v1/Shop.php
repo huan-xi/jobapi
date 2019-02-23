@@ -98,7 +98,9 @@ class Shop extends BaseController
     {
         $shop = $this->getShop();
         $data = input('get.');
-        $jobs = $shop->jobs()->where(['status'=>$status])->page($data['page'], $data['size'])->select();
+        $jobs = $shop->jobs()->where(['status'=>$status])
+            ->order("create_time","desc")
+            ->page($data['page'], $data['size'])->select();
         $msg['total']= $shop->jobs()->where(['status' => $status])->count();
         $msg['rows']=$jobs;
         return json(generateSuccessMsg($msg));

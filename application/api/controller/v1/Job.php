@@ -29,6 +29,7 @@ class Job extends BaseController
         $key=$data['key'];
         $jobs = (new JobModel())->with("images")->where(['status' => 1])
             ->where('job_desc','like','%'.$key.'%')
+            ->order("create_time","desc")
             ->page($data['page'], $data['size'])->select();
         foreach ($jobs as $job) {
             //增加浏览量

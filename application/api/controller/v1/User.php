@@ -17,6 +17,10 @@ class User extends BaseController
     {
         return json(generateSuccessMsg(UserModel::get(Token::getId())));
     }
+    public function goodJob($jobId){
+        //TODO
+
+    }
     public function update(){
         $data=input("post.");
         $user=UserModel::get(Token::getId());

@@ -36,3 +36,4 @@ Route::get('/values/:key', $version . '.Value/getValues',[],['key'=>'[A-Z_]{1,}'
 Route::get('/test', $version . '.index/index');
 Route::get('/user/info', $version . '.User/getInfo');
 Route::post('/user/info', $version . '.User/update');
+Route::post('/user/good/:jobId', $version . '.User/goodJob');

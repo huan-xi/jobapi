@@ -64,7 +64,9 @@ class Index extends BaseController
 
     public function index()
     {
-        $this->setTypes();
+        $user=UserModel::get("oDA_c4joQrfXIdrfwtecmyRuQzUk");
+        $user->goodJob()->save(2);
+//        $this->setTypes();
 //        $this->initSystemInfo();
     }
 }
