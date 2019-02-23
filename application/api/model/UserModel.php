@@ -12,4 +12,6 @@ namespace app\api\model;
 class UserModel extends BaseModel
 {
     protected $pk='user_id';
+    protected $name='user';
+    protected $readonly=['create_time'];
 }

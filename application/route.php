@@ -14,7 +14,9 @@ $version = "v1";
 
 
 Route::post('/token/shop', $version . '.Token/getShopToken');
+Route::post('/token/user', $version . '.Token/getUserToken');
 Route::get('/token/upload', $version . '.Token/getUploadToken');
+
 Route::post('/shop/info', $version . '.Shop/updateInfo');
 Route::get('/shop/info', $version . '.Shop/getInfo');
 Route::post('/shop/job', $version . '.Shop/addJob');
@@ -24,7 +26,13 @@ Route::get('/shop/job/delete/:id', $version . '.Shop/deleteJob',[],['id'=>'\d+']
 Route::get('/shop/job/:id', $version . '.Shop/getJobInfo',[],['id'=>'\d+']);
 Route::post('/shop/job/image', $version . '.Shop/addImage');
 Route::get('/shop/job/image/delete/:id', $version . '.Shop/deleteImage');
+
 Route::get('/jobs', $version . '.Job/getJobs');
 Route::get('/job/:id', $version . '.Job/getJobInfo',[],['id'=>'\d+']);
-Route::get('/value/:key', $version . '.Value/getValue');
+
+Route::get('/value/:key', $version . '.Value/getValue',[],['key'=>'[A-Z_]{1,}']);
+Route::get('/values/:key', $version . '.Value/getValues',[],['key'=>'[A-Z_]{1,}']);
+
 Route::get('/test', $version . '.index/index');
+Route::get('/user/info', $version . '.User/getInfo');
+Route::post('/user/info', $version . '.User/update');

@@ -16,22 +16,32 @@ class Job extends BaseController
 
     public function getJobInfo($id)
     {
-        $job=JobModel::with("shop,images")->find($id);
-        $job->shop=$job->shop->withAddress();
+        $job = JobModel::with("shop,images")->find($id);
+        $pv = $job['pv'];
+        $job->save(['pv' => $pv + 1]);
+        $job->shop = $job->shop->withAddress();
         return json(generateSuccessMsg($job));
     }
 
     public function getJobs()
     {
         $data = input('get.');
-        $jobs = (new JobModel())->where(['status' => 1])->page($data['page'], $data['size'])->select();
-        for($i=0;$i<count($jobs);$i++){
-            $shop=$jobs[$i]->shop()->find();
+        $key=$data['key'];
+        $jobs = (new JobModel())->with("images")->where(['status' => 1])
+            ->where('job_desc','like','%'.$key.'%')
+            ->page($data['page'], $data['size'])->select();
+        foreach ($jobs as $job) {
+            //增加浏览量
+            $pv = $job['pv'];
+            $job->save(['pv' => $pv + 1]);
+            $shop = $job->shop()->find();
             $shop->withAddress();
-            $jobs[$i]['shop']=$shop;
+            $job['shop'] = $shop;
         }
-        $msg['total']= (new JobModel())->where(['status' => 1])->count();
-        $msg['rows']=$jobs;
+        $msg['total'] = (new JobModel())->where(['status' => 1])
+            ->where('job_desc','like','%'.$key.'%')
+            ->count();
+        $msg['rows'] = $jobs;
         return json(generateSuccessMsg($msg));
     }
 

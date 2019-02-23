@@ -99,7 +99,9 @@ class Shop extends BaseController
         $shop = $this->getShop();
         $data = input('get.');
         $jobs = $shop->jobs()->where(['status'=>$status])->page($data['page'], $data['size'])->select();
-        return json(generateSuccessMsg($jobs));
+        $msg['total']= $shop->jobs()->where(['status' => $status])->count();
+        $msg['rows']=$jobs;
+        return json(generateSuccessMsg($msg));
     }
 
     public function addJob()
@@ -114,7 +116,7 @@ class Shop extends BaseController
             'job_desc' => $data['desc'],
             'pv'=>0
         ]);
-        $images = explode(",", $data['oosImages']);
+        $images = explode(",", $data['ossImages']);
         //保存图片
         for ($i = 0; $i < count($images); $i++) {
             $imagesData['src'] = $images[$i];

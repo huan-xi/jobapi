@@ -6,5 +6,6 @@
  * Time: 18:32
  */
 return [
-    'token_expire_in' => 7200//    缓存过期时间
+    'token_expire_in' => 7200,//    缓存过期时间
+    'images_src'=>'https://oss.shebuluo.cn'
 ];

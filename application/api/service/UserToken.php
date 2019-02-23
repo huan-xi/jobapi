@@ -74,7 +74,7 @@ class UserToken
         if($this->mode=="u"){
             //用户模式
             $shop = UserModel::get($openid);
-            if (!$shop) ShopModel::create(['user_id' => $openid,
+            if (!$shop) UserModel::create(['user_id' => $openid,
                 'status'=>'1',
                 'create_time'=>time()]);
         }else{

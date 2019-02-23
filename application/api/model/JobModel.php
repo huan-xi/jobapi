@@ -15,6 +15,13 @@ class JobModel extends BaseModel
     protected $pk = 'job_id';
     protected $hidden = ['shop_id'];
 
+    public function getPage($page,$size,$status){
+        $jobs=$this->where([['status' => $status]])->page($page,$size)->select();
+        $msg['total']= $this->where(['status' => $status])->count();
+        $msg['rows']=$jobs;
+        return $msg;
+    }
+
 //    属于一个商家
     public function shop()
     {

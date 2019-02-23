@@ -11,7 +11,12 @@ namespace app\api\model;
 
 class ImageModel extends BaseModel
 {
-    protected $name="image";
-    protected $pk="image_id";
-    protected $hidden=['job_id'];
+    protected $name = "image";
+    protected $pk = "image_id";
+    protected $hidden = ['job_id'];
+
+    public function getSrcAttr($src)
+    {
+        return config('setting.images_src').$src;
+    }
 }
