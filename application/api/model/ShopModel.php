@@ -15,6 +15,10 @@ class ShopModel extends BaseModel
     protected $name = 'shop';
     protected $pk = 'shop_id';
 
+    //检查是否填写信息
+    public function checkCompletion(){
+
+    }
     public function withAddress()
     {
         $address = $this->address()->find();

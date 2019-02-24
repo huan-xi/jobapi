@@ -3,7 +3,6 @@
 namespace app\api\controller\v1;
 
 use app\api\model\SystemValueModel;
-use app\api\model\UserModel;
 
 class Index extends BaseController
 {
@@ -64,9 +63,6 @@ class Index extends BaseController
 
     public function index()
     {
-        $user=UserModel::get("oDA_c4joQrfXIdrfwtecmyRuQzUk");
-        $user->goodJob()->save(2);
-//        $this->setTypes();
-//        $this->initSystemInfo();
+
     }
 }

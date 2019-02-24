@@ -9,6 +9,8 @@
 namespace app\api\model;
 
 
+use think\Db;
+
 class JobModel extends BaseModel
 {
     protected $name = 'job';
@@ -21,7 +23,11 @@ class JobModel extends BaseModel
         $msg['rows']=$jobs;
         return $msg;
     }
-
+    public function withGood()
+    {
+        $count = Db::table("good")->where("job_id", '=', $this->job_id)->count();
+        $this->good = $count;
+    }
 //    属于一个商家
     public function shop()
     {

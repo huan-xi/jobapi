@@ -12,8 +12,13 @@ namespace app\api\validate;
 class ShopInfoValidate extends BaseValidate
 {
     protected $rule = [
-        'name' => 'require|length:4,20',
-        'contacts'=> 'require|length:2,7',
-        'phone' => 'require|number|length:10'
+        'name' => 'require|min:9',
+        'contacts'=> 'require|min:6',
+        'phone' => 'require|number|length:11',
+        'head_src' => 'require',
+        'latitude' => 'require',
+        'longitude' => 'require',
+        'address' => 'require',
+        'addressDesc' => 'require',
     ];
 }

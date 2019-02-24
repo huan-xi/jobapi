@@ -9,9 +9,13 @@
 namespace app\api\controller\v1;
 
 use app\api\model\JobModel;
+use app\api\validate\IdValidate;
+use app\api\validate\PageValidate;
+use think\Db;
 
 class Job extends BaseController
 {
+
 
 
     public function getJobInfo($id)
@@ -26,10 +30,11 @@ class Job extends BaseController
     public function getJobs()
     {
         $data = input('get.');
-        $key=$data['key'];
+        (new PageValidate())->goCheck();
+        $key = array_key_exists('key', $data) ? $data['key'] : '';
         $jobs = (new JobModel())->with("images")->where(['status' => 1])
-            ->where('job_desc','like','%'.$key.'%')
-            ->order("create_time","desc")
+            ->where('job_desc', 'like', '%' . $key . '%')
+            ->order("create_time", "desc")
             ->page($data['page'], $data['size'])->select();
         foreach ($jobs as $job) {
             //增加浏览量
@@ -38,9 +43,10 @@ class Job extends BaseController
             $shop = $job->shop()->find();
             $shop->withAddress();
             $job['shop'] = $shop;
+            $job->withGood();
         }
         $msg['total'] = (new JobModel())->where(['status' => 1])
-            ->where('job_desc','like','%'.$key.'%')
+            ->where('job_desc', 'like', '%' . $key . '%')
             ->count();
         $msg['rows'] = $jobs;
         return json(generateSuccessMsg($msg));
