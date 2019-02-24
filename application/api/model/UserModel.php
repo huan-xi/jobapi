@@ -17,6 +17,6 @@ class UserModel extends BaseModel
 
     //点多个赞
     public function goodJob(){
-//        return $this->belongsToMany('JobModel','good','job_id');
+        return $this->belongsToMany('JobModel','good','job_id');
     }
 }
