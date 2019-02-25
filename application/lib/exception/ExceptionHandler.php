@@ -26,7 +26,7 @@ class ExceptionHandler extends Handle
             $this->status = $e->getStatus();
             $this->msg = $e->getMsg();
         } else {
-            $this->msg = $e->getMessage();
+            $this->msg = "服务器异常，请联系管理员";
         }
         return json([
             'status' => $this->status,

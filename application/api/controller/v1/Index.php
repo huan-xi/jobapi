@@ -2,6 +2,7 @@
 
 namespace app\api\controller\v1;
 
+use app\api\model\JobModel;
 use app\api\model\SystemValueModel;
 
 class Index extends BaseController

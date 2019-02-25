@@ -9,14 +9,10 @@
 namespace app\api\controller\v1;
 
 use app\api\model\JobModel;
-use app\api\validate\IdValidate;
 use app\api\validate\PageValidate;
-use think\Db;
 
 class Job extends BaseController
 {
-
-
 
     public function getJobInfo($id)
     {

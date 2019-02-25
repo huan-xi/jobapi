@@ -28,6 +28,9 @@ class JobModel extends BaseModel
         $count = Db::table("good")->where("job_id", '=', $this->job_id)->count();
         $this->good = $count;
     }
+    public function good(){
+        return $this->belongsToMany('UserModel','good','user_id');
+    }
 //    属于一个商家
     public function shop()
     {
