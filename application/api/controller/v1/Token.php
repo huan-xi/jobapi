@@ -18,9 +18,10 @@ class Token extends BaseController
         $token = (new UserToken($code))->get();
         return $this->response(generateMsg(1, $token));
     }
+
     public function getUserToken($code = '')
     {
-        $token = (new UserToken($code,'u'))->get();
+        $token = (new UserToken($code, 'u'))->get();
         return $this->response(generateMsg(1, $token));
     }
 
@@ -29,5 +30,13 @@ class Token extends BaseController
         return json([
             'uptoken' => (new QiniuAuth())->getUploadToken()
         ]);
+    }
+
+    public function getAdminToken()
+    {
+        $data = input("post.");
+        $token = \app\api\service\Token::generateToken();
+        //\app\api\service\Token::saveTokenToCache($token);
+        return json(['token' => $token]);
     }
 }

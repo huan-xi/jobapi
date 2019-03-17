@@ -70,7 +70,6 @@ class UserToken
     private function grantToken($wxRes)
     {
         $openid = $wxRes['openid'];
-
         if($this->mode=="u"){
             //用户模式
             $shop = UserModel::get($openid);
@@ -84,7 +83,7 @@ class UserToken
                 'status'=>'1',
                 'create_time'=>time()]);
         }
-        $key = $this->saveToCache($this->prepareCachedValue($openid));
+        $key = Token::saveTokenToCache($this->prepareCachedValue($openid));
         return $key;
     }
 
@@ -96,15 +95,4 @@ class UserToken
         return $cachedValue;
     }
 
-    private function saveToCache($CachedValue)
-    {
-        $key = Token::generateToken();
-        $value = json_encode($CachedValue);
-        $token_expire_in = config('setting.token_expire_in');
-        $res = cache($key, $value, $token_expire_in);
-        if (!$res) {
-            throw new Exception("服务器缓存异常");
-        }
-        return $key;
-    }
 }

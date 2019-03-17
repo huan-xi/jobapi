@@ -40,3 +40,9 @@ Route::post('/user/info', $version . '.User/update');
 Route::get('/user/good/:jobId', $version . '.User/goodJob');
 
 Route::get('/test', $version . '.index/index');
+
+//admin
+
+Route::post('/admin/login', $version . '.Token/getAdminToken');
+
+Route::post('/upload/image', $version . '.Upload/uploadImage');

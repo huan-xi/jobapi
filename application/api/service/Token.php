@@ -21,7 +21,17 @@ class Token
         $salt = config('secure.token_salt');
         return md5($rand . $timestamp . $salt);
     }
-
+    public static function saveTokenToCache($CachedValue)
+    {
+        $key = Token::generateToken();
+        $value = json_encode($CachedValue);
+        $token_expire_in = config('setting.token_expire_in');
+        $res = cache($key, $value, $token_expire_in);
+        if (!$res) {
+            throw new Exception("服务器缓存异常");
+        }
+        return $key;
+    }
     public static function getId()
     {
         $token = request()->header('Token');
